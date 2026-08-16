@@ -41,7 +41,7 @@ message: "user created successfully"
 
 app.post("/signin", async(req,res)=>{
 
-    const email= req.body.username;
+    const email= req.body.email;
     const password= req.body.password;
 
     const userExist= await userModel.findOne({
@@ -61,7 +61,6 @@ app.post("/signin", async(req,res)=>{
     })
 
 })
-
 
 app.post("/todos",authMiddleware,async(req,res)=>{
 
@@ -84,6 +83,8 @@ const todo=await todoModel.create({
  })
 
 })
+
+
 app.patch("/todos/:id", authMiddleware, async (req, res) => {
   const userId = req.userId;
   const todoId = req.params.id;
@@ -137,4 +138,4 @@ app.delete("/todos/:id",authMiddleware,async(req,res)=>{
 
 })
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000, "0.0.0.0");
