@@ -45,21 +45,28 @@ const [confirmPassword, setConfirmPassword] = useState('');
 
   setError('');
 
-  try {
-    const response = await api.post('/signup', {
-      name,
-      email,
-      password,
-    });
+ try {
+  const response = await api.post('/signup', {
+    name,
+    email,
+    password,
+  });
 
-    console.log(response.data);
-  } catch (error: any) {
-    console.log(
-      'SIGNUP ERROR:',
-      error.response?.data || error.message,
-    );
-  }
-};
+  console.log(response.data);
+  navigation.navigate('Login');
+
+} catch (error: any) {
+  console.log(
+    'SIGNUP ERROR:',
+    error.response?.data || error.message,
+  );
+
+  setError(
+    error.response?.data?.message || 'Signup failed'
+  );
+} 
+
+   };
 
   return (
     <View style={styles.container}>
@@ -92,7 +99,13 @@ const [confirmPassword, setConfirmPassword] = useState('');
         onChangeText={setPassword}
         secureTextEntry
       />
-
+      <TextInput
+  style={styles.input}
+  placeholder="Confirm Password"
+  value={confirmPassword}
+  onChangeText={setConfirmPassword}
+  secureTextEntry
+/>
       <TouchableOpacity
         style={styles.button}
         onPress={handleSignup}>

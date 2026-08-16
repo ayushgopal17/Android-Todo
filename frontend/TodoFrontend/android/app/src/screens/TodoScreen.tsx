@@ -141,7 +141,11 @@ const deleteTodo = async (id: string) => {
 </TouchableOpacity>
       </View>
 
-
+{error !== '' && (
+  <Text style={{color: 'red'}}>
+    {error}
+  </Text>
+)}
       <View style={styles.inputContainer}>
     <View style={{ width: '70%', height: 120 }}>
   <TextInput
