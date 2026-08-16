@@ -11,11 +11,12 @@ import { userModel,todoModel } from "./models"
 
 
 app.post("/signup",async (req,res)=>{
-const username=req.body.username;
-const password=req.body.password;
+const name = req.body.name;
+const email = req.body.email;
+const password = req.body.password;
 
 const userExist= await userModel.findOne({
-username
+email
 })
 
 if(userExist){
@@ -27,7 +28,8 @@ if(userExist){
 }
 
  const newUser = userModel.create({
-    username,
+    name,
+    email,
     password
 })
 
@@ -39,11 +41,11 @@ message: "user created successfully"
 
 app.post("/signin", async(req,res)=>{
 
-    const username= req.body.username;
+    const email= req.body.username;
     const password= req.body.password;
 
     const userExist= await userModel.findOne({
-        username,
+        email,
         password
     })
     
@@ -82,19 +84,43 @@ const todo=await todoModel.create({
  })
 
 })
+app.patch("/todos/:id", authMiddleware, async (req, res) => {
+  const userId = req.userId;
+  const todoId = req.params.id;
 
+  const updatedTodo = await todoModel.findOneAndUpdate(
+    {
+      _id: todoId,
+      userId
+    },
+    {
+      $set: req.body
+    },
+    {
+      new: true
+    }
+  );
 
+  res.json({
+    todo: updatedTodo
+  });
+});
 
-app.get("/todos",  authMiddleware,async(req,res)=>{
+app.get("/todos", authMiddleware, async (req, res) => {
+  const userId = req.userId;
 
-    const userId=req.userId;
-    const userTodos= await todoModel.find({
-        userId
-    })
-    res.json({
-        todos: userTodos
-    })
-})
+  console.log("TODOS USER ID:", userId);
+
+  const userTodos = await todoModel.find({
+    userId
+  });
+
+  console.log("FOUND TODOS:", userTodos);
+
+  res.json({
+    todos: userTodos
+  });
+});
 
 app.delete("/todos/:id",authMiddleware,async(req,res)=>{
 

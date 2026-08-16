@@ -10,6 +10,7 @@ const decode=jwt.verify(token,"todo_apptoken") as jwt.JwtPayload & {
 
 if(decode.userId){
     req.userId=decode.userId
+    console.log('USER ID:', req.userId);
      next();
 }
 else{
@@ -17,6 +18,7 @@ else{
         message: "Invalid Token"
     })
 }
+
 
 
 }

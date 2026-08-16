@@ -5,14 +5,20 @@ mongoose.connect(process.env.MONGO_URL!);
 
 const {Schema} = mongoose;
 
-const UserSchema= new mongoose.Schema({
-    username: String,
-    password: String
-})
+const UserSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
 
 const TodoSchema= new mongoose.Schema({
     title: String,
     description: String,
+
+  completed: {
+    type: Boolean,
+    default: false
+  },
     dateTime: {
         type: Date,
         default: Date.now
