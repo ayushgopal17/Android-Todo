@@ -146,7 +146,7 @@ const deleteTodo = async (id: string) => {
     <View style={{ width: '70%', height: 120 }}>
   <TextInput
     style={{
-      flex: 1,
+      flex: 3,
       borderWidth: 1,
       borderColor: '#ccc',
       borderRadius: 8,
