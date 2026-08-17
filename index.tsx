@@ -138,4 +138,4 @@ app.delete("/todos/:id",authMiddleware,async(req,res)=>{
 
 })
 
-app.listen(process.env.PORT || 3000, "0.0.0.0");
+app.listen(process.env.PORT || 3000);
